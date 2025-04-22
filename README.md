@@ -3,7 +3,7 @@
 
 This project is an implementation of **Tavily** for web search and **Groq (LLaMA3)** AI agents using **Langchain** to do research and draft answers. The app extracts the latest web data and generates a structured research document with a **title**, **abstract**, **introduction**, **body**, **conclusion**, **references**, and **images**.
 
-## 1. #Installation
+## 1. Installation
 ```bash
 git clone [https://github.com/your-username/dual-agent-drafter](https://github.com/SketchyCarrot/Tavily_Agentic_AI.git)
 cd dual-agent-drafter
