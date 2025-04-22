@@ -23,7 +23,8 @@ pip install langchain groq tavily streamlit
 Set your API keys in ```main.py```
 ```markdown
 os.environ["GROQ_API_KEY"] = "your-groq-key"
-TAVILY_API_KEY = "your-tavily-key"```
+TAVILY_API_KEY = "your-tavily-key"
+```
 
 # How to run
 ```streamlit run main.py```
