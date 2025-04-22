@@ -43,7 +43,7 @@ def main():
                 if draft["images"]:
                         st.markdown("### Images")
                         for link in draft["images"]:
-                                st.image(link.strip(), use_column_width=True)
+                                st.image(link.strip(), use_container_width=True)
 
 
 if __name__ == "__main__":
