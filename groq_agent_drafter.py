@@ -4,7 +4,7 @@ from langchain.output_parsers import ResponseSchema, StructuredOutputParser
 import getpass
 import os
 
-os.environ["GROQ_API_KEY"] = "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"
+
 
 model = init_chat_model("llama3-8b-8192", model_provider="groq")
 
