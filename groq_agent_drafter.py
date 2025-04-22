@@ -4,7 +4,7 @@ from langchain.output_parsers import ResponseSchema, StructuredOutputParser
 import getpass
 import os
 
-
+os.environ["GROQ_API_KEY"] = "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"
 
 model = init_chat_model("llama3-8b-8192", model_provider="groq")
 
@@ -30,7 +30,27 @@ output_parser = StructuredOutputParser.from_response_schemas(response_schemas)
 format_instructions = output_parser.get_format_instructions()
 
 
-research_template = """You are a professional researcher. Draft an answer with the given sections {format_instructions} based on the data given inside the triple backticks. Use at least 100 words for abstract, into, body and conclusion. Provide the references URL in harvard referencing style. Data: ```{text}```"""
+research_template = research_template = """
+You are an expert academic researcher and writer.
+Your task is to generate a structured research draft in strict JSON format using the following schema:
+{format_instructions}
+Each section (abstract, intro, body, conclusion) should be thoughtful, coherent, and at least 100 words long.
+Please write:
+- A clear and academic 'title'.
+- A concise and informative 'abstract'.
+- A strong 'introduction' to set context.
+- A well-developed 'body' section with evidence or analysis.
+- A reflective 'conclusion' summarizing the study.
+
+Also:
+- Include references in 'Harvard referencing style' with 'research papers listed first'.
+- If image links are provided in the data, list them under the `images` field.
+
+Use only the information from the data below, enclosed in triple backticks.
+
+```data
+{text}
+```"""
 prompt_template = ChatPromptTemplate.from_template(research_template)
 
 def generate_research_draft(text: str):

@@ -16,9 +16,9 @@ def main():
         include_answer = st.selectbox("4. Include Answer", ["none", "basic", "advanced"], index=2)
         include_images = st.checkbox("5. Include Images", value=False)
 
-        if st.button("Generate Research Draft"):
+        if st.button("Create Research Draft"):
                 with st.spinner("Searching Tavily."):
-                        tavily_response = tavily_search_agent(
+                        total_content, references, image_links = tavily_search_agent(
                         query=query,
                         search_depth=search_depth,
                         max_results=max_results,
@@ -26,10 +26,9 @@ def main():
                         include_images=include_images,
                         )
 
-                        groq_input = tavily_response
 
-                with st.spinner("Drafting answer with Groq."):
-                        draft = generate_research_draft(text=groq_input)
+                with st.spinner("Drafting answer using Groq."):
+                        draft = generate_research_draft(text=total_content)
 
                 st.markdown("### Title\n" + draft["title"])
                 st.markdown("### Abstract\n" + draft["abstract"])
@@ -37,13 +36,13 @@ def main():
                 st.markdown("### Body\n" + draft["body"])
                 st.markdown("### Conclusion\n" + draft["conclusion"])
                 st.markdown("### References")
-                for ref in draft["references"]:
-                        st.markdown(f" {ref}")
+                for reference in references:
+                        st.markdown(f" {reference}")
 
-                if draft["images"]:
+                if image_links:
                         st.markdown("### Images")
-                        for link in draft["images"]:
-                                st.image(link.strip(), use_container_width=True)
+                        for image in image_links:
+                                st.image(image, use_container_width=True)
 
 
 if __name__ == "__main__":
