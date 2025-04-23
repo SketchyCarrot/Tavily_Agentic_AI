@@ -4,7 +4,7 @@ from langchain.output_parsers import ResponseSchema, StructuredOutputParser
 import getpass
 import os
 
-
+os.environ["GROQ_API_KEY"] = "your_groq_api_key"
 
 model = init_chat_model("llama3-8b-8192", model_provider="groq")
 
@@ -30,7 +30,7 @@ output_parser = StructuredOutputParser.from_response_schemas(response_schemas)
 format_instructions = output_parser.get_format_instructions()
 
 
-research_template = research_template = """
+research_template = """
 You are an expert academic researcher and writer.
 Your task is to generate a structured research draft in strict JSON format using the following schema:
 {format_instructions}
@@ -48,7 +48,7 @@ Also:
 
 Use only the information from the data below, enclosed in triple backticks.
 
-```data
+```Data:
 {text}
 ```"""
 prompt_template = ChatPromptTemplate.from_template(research_template)
@@ -61,3 +61,14 @@ def generate_research_draft(text: str):
         answer_draft = model(formatted_prompt)
         parsed_response = output_parser.parse(answer_draft.content)
         return parsed_response
+
+summary_prompt_template = """You are a concise and intelligent summarizer.
+Please summarize the following research material inside triple backticks in under 1000 words, keeping all key points and insights intact.
+```Text:{text}```"""
+
+summary_template = ChatPromptTemplate.from_template(summary_prompt_template)
+
+def summarize(text: str):
+        formatted_prompt = summary_template.format_messages(text=text)
+        response = model(formatted_prompt)
+        return response.content.strip()

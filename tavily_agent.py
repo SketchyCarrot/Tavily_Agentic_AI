@@ -1,8 +1,8 @@
 from tavily import TavilyClient
 import os
 
-
-client = TavilyClient(api_key="TAVILY_API_KEY")
+TAVILY_API_KEY = "your_tavily_api_key"
+client = TavilyClient(api_key=TAVILY_API_KEY)
 
 def tavily_search_agent(query, search_depth="basic", max_results=1, include_answer="none", include_images=False):
         response = client.search(

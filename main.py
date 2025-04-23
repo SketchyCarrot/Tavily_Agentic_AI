@@ -2,7 +2,7 @@ import streamlit as st
 from tavily_agent import tavily_search_agent
 from groq_agent_drafter import generate_research_draft
 from tavily_agent import tavily_search_agent
-from groq_agent_drafter import generate_research_draft
+from groq_agent_drafter import generate_research_draft, summarize
 
 def main():
         st.set_page_config(page_title="Dual-agent Research Drafter", layout="wide")
@@ -28,7 +28,8 @@ def main():
 
 
                 with st.spinner("Drafting answer using Groq."):
-                        draft = generate_research_draft(text=total_content)
+                        summarized_content = summarize(text=total_content)
+                        draft = generate_research_draft(text=summarized_content)
 
                 st.markdown("### Title\n" + draft["title"])
                 st.markdown("### Abstract\n" + draft["abstract"])
